@@ -1,5 +1,54 @@
-sudo: false
 language: ruby
+sudo: false
+before_script:
+  - rake compile
 rvm:
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
   - 2.4.0
-before_install: gem install bundler -v 1.14.6
+  - ruby-head
+  - rbx-2
+env:
+  - COVERAGE=true LIBVIPS=8.4.4
+matrix:
+  allow_failures:
+    - rvm: "rbx-2"
+    - rvm: "ruby-head"
+
+# Copied from https://github.com/jcupitt/ruby-vips/blob/master/.travis.yml
+before_install:
+  - uname -a
+  - sudo apt-get update
+  - wget http://www.vips.ecs.soton.ac.uk/supported/current/vips-$LIBVIPS.tar.gz
+  - tar xvf vips-$LIBVIPS.tar.gz
+  - cd vips-$LIBVIPS
+  - >
+    CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0
+    ./configure --prefix=/usr
+  - make
+  - sudo make install
+  - sudo ldconfig
+
+addons:
+  apt:
+    packages:
+      - libxml2-dev
+      - gettext
+      - python-dev
+      - liblcms1-dev
+      - libmagickwand-dev
+      - libopenexr-dev
+      - libcfitsio3-dev
+      - gobject-introspection
+      - libgirepository1.0-dev
+      - libgif-dev
+      - libgs-dev
+      - libgsf-1-dev
+      - libmatio-dev
+      - libopenslide-dev
+      - liborc-0.4-dev
+      - libpango1.0-dev
+      - libpoppler-glib-dev
+      - libwebp-dev
+      - libglib2.0-dev

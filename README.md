@@ -2,6 +2,10 @@
 
 An easy to use thumbnail resizer. It's based on libvips so it's fast.
 
+[![Build Status](https://secure.travis-ci.org/ioquatix/vips-thumbnail.svg)](http://travis-ci.org/ioquatix/vips-thumbnail)
+[![Code Climate](https://codeclimate.com/github/ioquatix/vips-thumbnail.svg)](https://codeclimate.com/github/ioquatix/vips-thumbnail)
+[![Coverage Status](https://coveralls.io/repos/ioquatix/vips-thumbnail/badge.svg)](https://coveralls.io/r/ioquatix/vips-thumbnail)
+
 ## Installation
 
 Add this line to your application's Gemfile:
