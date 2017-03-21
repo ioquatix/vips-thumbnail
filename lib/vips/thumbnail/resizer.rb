@@ -44,12 +44,10 @@ module Vips
 			def resize_to_fill(output_size)
 				width, height = *output_size
 				
-				# If the input image is not big enough, return nil
-				if width >= input_image.width and height >= input_image.height
-					return nil
+				# We can only fill and crop if the input image is BIGGER in at least one dimension than the desired output size:
+				if input_image.width > width or input_image.height > height
+					return fill_and_crop(input_image, width, height)
 				end
-				
-				return fill_and_crop(input_image, width, height)
 			end
 			
 			# Resize the image to fit within the given bounds, preserving aspect ratio.
@@ -57,12 +55,10 @@ module Vips
 			def resize_to_fit(output_size)
 				width, height = *output_size
 				
-				# If the input image is not big enough, return nil
-				if width < input_image.width and height >= input_image.height
-					return nil
+				# We can only fit if the input image is BIGGER in at least one dimension than the desired output size:
+				if input_image.width > width or input_image.height > height
+					return fit(input_image, width, height)
 				end
-				
-				return fit(input_image, width, height)
 			end
 			
 			private
