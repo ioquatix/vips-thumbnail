@@ -39,7 +39,9 @@ module Vips
 				return @input_image
 			end
 			
-			def resize(output_size)
+			# Resize the image to completely fill the desired size, if possible.
+			# @return [Vips::Image] if the image could be resized, otherwise `nil`.
+			def resize_to_fill(output_size)
 				width, height = *output_size
 				
 				# If the input image is not big enough, return nil
@@ -47,12 +49,36 @@ module Vips
 					return nil
 				end
 				
-				return resize_to_fit(input_image, width, height)
+				return fill_and_crop(input_image, width, height)
+			end
+			
+			# Resize the image to fit within the given bounds, preserving aspect ratio.
+			# @return [Vips::Image] if the image could be resized, otherwise `nil`.
+			def resize_to_fit(output_size)
+				width, height = *output_size
+				
+				# If the input image is not big enough, return nil
+				if width < input_image.width and height >= input_image.height
+					return nil
+				end
+				
+				return fit(input_image, width, height)
 			end
 			
 			private
 			
-			def resize_to_fit(image, width, height)
+			def fit(image, width, height)
+				x_scale = Rational(width, image.width)
+				y_scale = Rational(height, image.height)
+				
+				scale = [x_scale, y_scale].min
+				
+				if scale < 1.0
+					return image.resize(scale)
+				end
+			end
+			
+			def fill_and_crop(image, width, height)
 				x_scale = Rational(width, image.width)
 				y_scale = Rational(height, image.height)
 				
@@ -60,10 +86,6 @@ module Vips
 				# puts "scale #{scale}"
 				
 				if scale < 1.0
-					x_scale = Rational(width*2, image.width*2)
-					y_scale = Rational(height*2, image.height*2)
-					scale = [x_scale, y_scale].max
-					
 					image = image.resize(scale)
 				elsif scale > 1.0
 					# Just crop it.. no scale.
@@ -71,6 +93,10 @@ module Vips
 					height = image.height if y_scale > 1.0
 				end
 				
+				return crop(image, width, height)
+			end
+			
+			def crop(image, width, height)
 				if image.height < height
 					throw ArgumentError.new("Scaled image was smaller than expected! Scaled height #{image.height} < #{height}.")
 				end
