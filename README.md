@@ -28,13 +28,15 @@ It's super easy:
 
 ```ruby
 resizer = Vips::Thumbnail::Resizer.new(input_path)
-if image = resizer.resize([800, 600])
+if image = resizer.resize_to_fit([800, 600])
   image.write_to_file(output_path)
 else
   # The source image wasn't big enough:
   symlink(input_path, output_path)
 end
 ```
+
+There are two main methods, `#resize_to_fit` which preserves aspect ratio, and `#resize_to_fill` which resizes and crops to fit the desired size if needed.
 
 ## Contributing
 
