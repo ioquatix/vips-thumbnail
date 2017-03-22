@@ -1,4 +1,5 @@
 language: ruby
+dist: trusty
 sudo: true
 rvm:
   - 2.1.8
