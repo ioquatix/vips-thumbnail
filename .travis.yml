@@ -1,31 +1,7 @@
-language: ruby
-dist: trusty
-sudo: true
-rvm:
-  - 2.1.8
-  - 2.2.4
-  - 2.3.0
-  - 2.4.0
-  - ruby-head
-  - rbx-2
-env:
-  - COVERAGE=true LIBVIPS=8.4.4
-matrix:
-  allow_failures:
-    - rvm: "rbx-2"
-    - rvm: "ruby-head"
-
 # Copied from https://github.com/jcupitt/ruby-vips/blob/master/.travis.yml
-before_install:
-  - wget http://www.vips.ecs.soton.ac.uk/supported/current/vips-$LIBVIPS.tar.gz
-  - tar xvf vips-$LIBVIPS.tar.gz
-  - cd vips-$LIBVIPS
-  - >
-    CXXFLAGS=-D_GLIBCXX_USE_CXX11_ABI=0
-    ./configure --prefix=/usr
-  - make
-  - sudo make install
-  - sudo ldconfig
+sudo: false
+
+dist: trusty
 
 addons:
   apt:
@@ -49,3 +25,26 @@ addons:
       - libpoppler-glib-dev
       - libwebp-dev
       - libglib2.0-dev
+
+cache:
+  directories:
+    - $HOME/vips
+
+before_install:
+- source install-vips.sh
+
+rvm:
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
+  - 2.4.0
+  - ruby-head
+  - rbx-2
+
+env:
+  - COVERAGE=true
+
+matrix:
+  allow_failures:
+    - rvm: "rbx-2"
+    - rvm: "ruby-head"
