@@ -1,7 +1,5 @@
 language: ruby
-sudo: false
-before_script:
-  - rake compile
+sudo: true
 rvm:
   - 2.1.8
   - 2.2.4
@@ -18,8 +16,6 @@ matrix:
 
 # Copied from https://github.com/jcupitt/ruby-vips/blob/master/.travis.yml
 before_install:
-  - uname -a
-  - sudo apt-get update
   - wget http://www.vips.ecs.soton.ac.uk/supported/current/vips-$LIBVIPS.tar.gz
   - tar xvf vips-$LIBVIPS.tar.gz
   - cd vips-$LIBVIPS
