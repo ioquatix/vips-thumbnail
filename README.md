@@ -1,6 +1,6 @@
 # Vips::Thumbnail
 
-An easy to use thumbnail resizer. It's based on libvips so it's fast.
+An easy to use thumbnail resizer. It's based on libvips so it's [faster than everything else](http://www.vips.ecs.soton.ac.uk/index.php?title=Speed_and_Memory_Use).
 
 [![Build Status](https://secure.travis-ci.org/ioquatix/vips-thumbnail.svg)](http://travis-ci.org/ioquatix/vips-thumbnail)
 [![Code Climate](https://codeclimate.com/github/ioquatix/vips-thumbnail.svg)](https://codeclimate.com/github/ioquatix/vips-thumbnail)
