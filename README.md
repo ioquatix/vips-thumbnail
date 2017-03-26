@@ -22,6 +22,10 @@ Or install it yourself as:
 
 	$ gem install vips-thumbnail
 
+### Minimum Version
+
+`libvips` has some [integer truncation issues](https://github.com/jcupitt/ruby-vips/issues/82) in versions < 8.4, so you *must* use a release >= 8.4 otherwise you may experience problems with `resize_to_fill`.
+
 ## Usage
 
 It's super easy:
