@@ -93,18 +93,20 @@ module Vips
 					height = image.height if y_scale > 1.0
 				end
 				
+				# If you hit these errors, it means you are using an older version of vips (< 8.4) which has an integer truncation bug.
+				# https://github.com/jcupitt/ruby-vips/issues/82
+				if image.height < height
+					raise ArgumentError.new("Image resized smaller than crop! Scaled height #{image.height} < #{height}.")
+				end
+				
+				if image.width < width
+					raise ArgumentError.new("Image resized smaller than crop! Scaled width #{image.width} < #{width}.")
+				end
+				
 				return crop(image, width, height)
 			end
 			
 			def crop(image, width, height)
-				if image.height < height
-					throw ArgumentError.new("Scaled image was smaller than expected! Scaled height #{image.height} < #{height}.")
-				end
-				
-				if image.width < width
-					throw ArgumentError.new("Scaled image was smaller than expected! Scaled width #{image.width} < #{width}.")
-				end
-				
 				left = (image.width - width) / 2.0
 				top = (image.height - height) / 2.0
 				
