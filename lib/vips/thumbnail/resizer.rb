@@ -39,6 +39,10 @@ module Vips
 				return @input_image
 			end
 			
+			def input_aspect_ratio
+				Rational(input_image.width, input_image.height)
+			end
+			
 			# Resize the image to completely fill the desired size, if possible.
 			# @return [Vips::Image] if the image could be resized, otherwise `nil`.
 			def resize_to_fill(output_size)

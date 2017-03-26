@@ -40,5 +40,14 @@ RSpec.describe Vips::Thumbnail::Resizer do
 			output_image = subject.resize_to_fit([800, 800])
 			expect(output_image.size).to be == [800, 600]
 		end
+		
+		it "preserves aspect ratio" do
+			output_image = subject.resize_to_fit([800, 800])
+			
+			input_aspect_ratio = subject.input_aspect_ratio
+			output_aspect_ratio = Rational(output_image.width, output_image.height)
+			
+			expect(output_aspect_ratio).to be_within(0.01).of(input_aspect_ratio)
+		end
 	end
 end
