@@ -23,16 +23,22 @@ require 'vips'
 module Vips
 	module Thumbnail
 		class Resizer
-			def initialize(input_path)
+			def initialize(input_path, **options)
 				@input_path = input_path
+				@options = options
 				@input_image = nil
 			end
 			
 			attr :input_path
+			attr :options
+			
+			def flush!
+				@input_image = nil
+			end
 			
 			def input_image
 				unless @input_image
-					image = Vips::Image.new_from_file(@input_path)
+					image = Vips::Image.new_from_file(@input_path, **@options)
 					@input_image = image.autorot
 				end
 				
