@@ -1,43 +1,41 @@
-# Copied from https://github.com/jcupitt/ruby-vips/blob/master/.travis.yml
 sudo: false
-
 dist: trusty
 
-addons:
-  apt:
-    packages:
-      - libxml2-dev
-      - gettext
-      - python-dev
-      - liblcms1-dev
-      - libmagickwand-dev
-      - libopenexr-dev
-      - libcfitsio3-dev
-      - gobject-introspection
-      - libgirepository1.0-dev
-      - libgif-dev
-      - libgs-dev
-      - libgsf-1-dev
-      - libmatio-dev
-      - libopenslide-dev
-      - liborc-0.4-dev
-      - libpango1.0-dev
-      - libpoppler-glib-dev
-      - libwebp-dev
-      - libglib2.0-dev
+# addons:
+#   apt:
+#     packages:
+#       - libxml2-dev
+#       - gettext
+#       - python-dev
+#       - liblcms1-dev
+#       - libmagickwand-dev
+#       - libopenexr-dev
+#       - libcfitsio3-dev
+#       - gobject-introspection
+#       - libgirepository1.0-dev
+#       - libgif-dev
+#       - libgs-dev
+#       - libgsf-1-dev
+#       - libmatio-dev
+#       - libopenslide-dev
+#       - liborc-0.4-dev
+#       - libpango1.0-dev
+#       - libpoppler-glib-dev
+#       - libwebp-dev
+#       - libglib2.0-dev
 
 cache:
-  directories:
-    - $HOME/vips
+  - bundler
 
-before_install:
-- source install-vips.sh
+before_script:
+  - gem update --system
+  - gem install bundler
 
 rvm:
-  - 2.1.8
-  - 2.2.4
-  - 2.3.0
-  - 2.4.0
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
   - ruby-head
   - rbx-2
 
