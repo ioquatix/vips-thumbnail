@@ -23,9 +23,13 @@ require 'vips'
 module Vips
 	module Thumbnail
 		class Resizer
-			def initialize(input_path, **options)
+			def initialize(input_path = nil, **options, &block)
 				@input_path = input_path
-				@options = options
+				
+				@block = block || lambda do
+					Vips::Image.new_from_file(@input_path, autorotate: true, **options)
+				end
+				
 				@input_image = nil
 			end
 			
@@ -38,8 +42,7 @@ module Vips
 			
 			def input_image
 				unless @input_image
-					image = Vips::Image.new_from_file(@input_path, **@options)
-					@input_image = image.autorot
+					@input_image = @block.call
 				end
 				
 				return @input_image
