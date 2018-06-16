@@ -27,7 +27,9 @@ module Vips
 				@input_path = input_path
 				
 				@block = block || lambda do
-					Vips::Image.new_from_file(@input_path, autorotate: true, **options)
+					Vips::Image.new_from_file(@input_path, **options).tap do |image|
+						image.autorot if image.respond_to?(:autorot)
+					end
 				end
 				
 				@input_image = nil
