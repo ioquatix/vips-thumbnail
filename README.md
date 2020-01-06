@@ -2,7 +2,7 @@
 
 An easy to use thumbnail resizer. It's based on libvips so it's [faster than everything else](http://www.vips.ecs.soton.ac.uk/index.php?title=Speed_and_Memory_Use).
 
-[![Build Status](https://secure.travis-ci.org/ioquatix/vips-thumbnail.svg)](http://travis-ci.org/ioquatix/vips-thumbnail)
+[![Build Status](https://travis-ci.com/ioquatix/vips-thumbnail.svg)](https://travis-ci.com/ioquatix/vips-thumbnail)
 [![Code Climate](https://codeclimate.com/github/ioquatix/vips-thumbnail.svg)](https://codeclimate.com/github/ioquatix/vips-thumbnail)
 [![Coverage Status](https://coveralls.io/repos/ioquatix/vips-thumbnail/badge.svg)](https://coveralls.io/r/ioquatix/vips-thumbnail)
 
@@ -33,10 +33,10 @@ It's super easy:
 ```ruby
 resizer = Vips::Thumbnail::Resizer.new(input_path)
 if image = resizer.resize_to_fit([800, 600])
-  image.write_to_file(output_path)
+	image.write_to_file(output_path)
 else
-  # The source image wasn't big enough:
-  symlink(input_path, output_path)
+	# The source image wasn't big enough:
+	symlink(input_path, output_path)
 end
 ```
 
