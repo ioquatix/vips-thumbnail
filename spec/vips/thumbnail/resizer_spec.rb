@@ -24,6 +24,17 @@ RSpec.describe Vips::Thumbnail::Resizer do
 	let(:sample_path) {File.expand_path('IMG_8537.jpg', __dir__)}
 	subject{described_class.new(sample_path)}
 	
+	describe '#load' do
+		let(:sample_path) {File.expand_path('IMG_8537-rotated.jpg', __dir__)}
+		
+		it "autorotates the image" do
+			expect(subject.input_image.size).to be == [2448, 3264]
+			output_image = subject.resize_to_fill([400, 400])
+			
+			# output_image.write_to_file("resized.jpg")
+		end
+	end
+	
 	describe '#resize_to_fill' do
 		it "should load image with correct size" do
 			expect(subject.input_image).to_not be_nil

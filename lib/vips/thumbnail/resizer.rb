@@ -25,12 +25,9 @@ module Vips
 		class Resizer
 			def initialize(input_path = nil, **options, &block)
 				@input_path = input_path
+				@options = options
 				
-				@block = block || lambda do
-					Vips::Image.new_from_file(@input_path, **options).tap do |image|
-						image.autorot if image.respond_to?(:autorot)
-					end
-				end
+				@block = block || self.method(:load)
 				
 				@input_image = nil
 			end
@@ -77,6 +74,16 @@ module Vips
 			end
 			
 			private
+			
+			def load
+				image = Vips::Image.new_from_file(@input_path, **@options)
+				 
+				if image.respond_to?(:autorot)
+					image = image.autorot
+				end
+				
+				return image
+			end
 			
 			def fit(image, width, height)
 				x_scale = Rational(width, image.width)
