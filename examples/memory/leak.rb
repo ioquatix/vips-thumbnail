@@ -33,7 +33,7 @@ def acquire(img)
 end
 
 def release
-	GC.rb_gc_adjust_memory_usage(36*1024*1024)
+	GC.rb_gc_adjust_memory_usage(-36*1024*1024)
 end
 
 repeat.times do |i|
