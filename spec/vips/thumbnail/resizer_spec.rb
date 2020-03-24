@@ -35,6 +35,13 @@ RSpec.describe Vips::Thumbnail::Resizer do
 		end
 	end
 	
+	describe '#close' do
+		it "frees associated resources" do
+			expect(subject.input_image).to_not be_nil
+			subject.close
+		end
+	end
+	
 	describe '#resize_to_fill' do
 		it "should load image with correct size" do
 			expect(subject.input_image).to_not be_nil

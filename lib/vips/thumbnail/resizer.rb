@@ -35,9 +35,12 @@ module Vips
 			attr :input_path
 			attr :options
 			
-			def flush!
+			def close
+				@input_image&.close
 				@input_image = nil
 			end
+			
+			alias flush! close
 			
 			def input_image
 				unless @input_image
