@@ -11,34 +11,42 @@ end
 
 # Doesn't seem to have any affect:
 Vips.cache_set_max(0)
-Vips.cache_set_max_mem(0)
 
 GC.start
 puts "RSS at startup with gems loaded: %d MB" % [rss]
 
-close = true if ARGV.delete('--close')
-nullify = true if ARGV.delete('--nullify')
-gc_each = true if ARGV.delete('--gc-each')
+module GC
+	extend FFI::Library
+	ffi_lib FFI::CURRENT_PROCESS
+	
+	attach_function :rb_gc_adjust_memory_usage, [:ssize_t], :void
+end
 
 if ARGV.empty?
 	# A 4MiB JPEG, which decompresses to a 32MiB pixel buffer.
 	ARGV << "../../spec/vips/thumbnail/IMG_8537.jpg"
 end
 
+def acquire(img)
+	GC.rb_gc_adjust_memory_usage(36*1024*1024)
+	ObjectSpace.define_finalizer(img, self.method(:release))
+end
+
+def release
+	GC.rb_gc_adjust_memory_usage(36*1024*1024)
+end
+
 repeat.times do |i|
 	ARGV.each do |filename|
 		img = Vips::Image.new_from_file filename, :access => :sequential
-		img.write_to_file 'test.jpg', :Q => 50
+		acquire(img)
 		
-		# Try various permutations of these:
-		img.close if close
-		img = nil if nullify
-		GC.start if gc_each
+		img.write_to_file 'test.jpg', :Q => 50
+		img.close # Doesn't seem to have any effect.
 		
 		print "\rIteration: %-8d RSS: %6d MB File: %-32s".freeze % [i+1, rss, filename]
 	end
 end
-puts
 
-GC.start
+puts
 puts "RSS at exit: %d MB" % [rss]
