@@ -2,35 +2,33 @@
 
 An easy to use thumbnail resizer. It's based on libvips so it's [faster than everything else](http://www.vips.ecs.soton.ac.uk/index.php?title=Speed_and_Memory_Use).
 
-[![Build Status](https://travis-ci.com/ioquatix/vips-thumbnail.svg?branch=master)](https://travis-ci.com/ioquatix/vips-thumbnail)
-[![Code Climate](https://codeclimate.com/github/ioquatix/vips-thumbnail.svg)](https://codeclimate.com/github/ioquatix/vips-thumbnail)
-[![Coverage Status](https://coveralls.io/repos/ioquatix/vips-thumbnail/badge.svg)](https://coveralls.io/r/ioquatix/vips-thumbnail)
+[![Development Status](https://github.com/ioquatix/vips-thumbnail/workflows/Development/badge.svg)](https://github.com/ioquatix/vips-thumbnail/actions?workflow=Development)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
+``` ruby
 gem 'vips-thumbnail'
 ```
 
 And then execute:
 
-	$ bundle
+    $ bundle
 
 Or install it yourself as:
 
-	$ gem install vips-thumbnail
+    $ gem install vips-thumbnail
 
 ### Minimum Version
 
-`libvips` has some [integer truncation issues](https://github.com/jcupitt/ruby-vips/issues/82) in versions < 8.4, so you *must* use a release >= 8.4 otherwise you may experience problems with `resize_to_fill`.
+`libvips` has some [integer truncation issues](https://github.com/jcupitt/ruby-vips/issues/82) in versions \< 8.4, so you *must* use a release \>= 8.4 otherwise you may experience problems with `resize_to_fill`.
 
 ## Usage
 
 It's super easy:
 
-```ruby
+``` ruby
 resizer = Vips::Thumbnail::Resizer.new(input_path)
 if image = resizer.resize_to_fit([800, 600])
 	image.write_to_file(output_path)
@@ -44,11 +42,11 @@ There are two main methods, `#resize_to_fit` which preserves aspect ratio, and `
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+1.  Fork it
+2.  Create your feature branch (`git checkout -b my-new-feature`)
+3.  Commit your changes (`git commit -am 'Add some feature'`)
+4.  Push to the branch (`git push origin my-new-feature`)
+5.  Create new Pull Request
 
 ## License
 
